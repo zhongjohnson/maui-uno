@@ -11,5 +11,22 @@
 			<RoundRectangle CornerRadius="12"/>
 		    </Border.StrokeShape>
 		</Border>
+		<OnPlatform x:TypeArguments="View">
+			<On Platform="UWP, macOS">
+				<Label Text="Desktop, maybe ?"/>
+			</On>
+			<On Platform="Android, iOS">
+				<Label Text="Mobile, eventually ?"/>
+			</On>
+		</OnPlatform>
+		<Label>
+			<Label.Text>
+				<OnPlatform x:TypeArguments="x:String" Default="Default">
+					<On Platform="Android, iOS">Not default</On>
+				</OnPlatform>
+
+			</Label.Text>
+		</Label>
+	
 	</StackLayout>
 </ContentPage>
