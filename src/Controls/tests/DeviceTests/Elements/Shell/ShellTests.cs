@@ -42,52 +42,52 @@ namespace Microsoft.Maui.DeviceTests
 			});
 		}
 
-		[Fact(DisplayName = "Empty Shell")]
-		public async Task DetailsViewUpdates()
-		{
-			SetupBuilder();
+		//[Fact(DisplayName = "Empty Shell")]
+		//public async Task DetailsViewUpdates()
+		//{
+		//	SetupBuilder();
 
-			var shell = await InvokeOnMainThreadAsync<Shell>(() =>
-			{
-				return new Shell()
-				{
-					Items =
-						{
-							new ContentPage()
-						}
-				};
-			});
+		//	var shell = await InvokeOnMainThreadAsync<Shell>(() =>
+		//	{
+		//		return new Shell()
+		//		{
+		//			Items =
+		//				{
+		//					new ContentPage()
+		//				}
+		//		};
+		//	});
 
-			await CreateHandlerAndAddToWindow<ShellHandler>(shell, async (handler) =>
-			{
-				// TODO MAUI Fix this 
-				await Task.Delay(100);
-				Assert.NotNull(shell.Handler);
-			});
-		}
+		//	await CreateHandlerAndAddToWindow<ShellHandler>(shell, async (handler) =>
+		//	{
+		//		// TODO MAUI Fix this 
+		//		await Task.Delay(100);
+		//		Assert.NotNull(shell.Handler);
+		//	});
+		//}
 
-		[Theory]
-		[ClassData(typeof(ShellBasicNavigationTestCases))]
-		public async Task BasicShellNavigationStructurePermutations(ShellItem[] shellItems)
-		{
-			SetupBuilder();
-			var shell = await InvokeOnMainThreadAsync<Shell>(() =>
-			{
-				var value = new Shell();
-				foreach (var item in shellItems)
-					value.Items.Add(item);
+		//[Theory]
+		//[ClassData(typeof(ShellBasicNavigationTestCases))]
+		//public async Task BasicShellNavigationStructurePermutations(ShellItem[] shellItems)
+		//{
+		//	SetupBuilder();
+		//	var shell = await InvokeOnMainThreadAsync<Shell>(() =>
+		//	{
+		//		var value = new Shell();
+		//		foreach (var item in shellItems)
+		//			value.Items.Add(item);
 
-				return value;
-			});
+		//		return value;
+		//	});
 
-			await CreateHandlerAndAddToWindow<ShellHandler>(shell, async (handler) =>
-			{
-				// TODO MAUI Fix this 
-				await Task.Delay(100);
-				await shell.GoToAsync("//page2");
-				await Task.Delay(100);
-			});
-		}
+		//	await CreateHandlerAndAddToWindow<ShellHandler>(shell, async (handler) =>
+		//	{
+		//		// TODO MAUI Fix this 
+		//		await Task.Delay(100);
+		//		await shell.GoToAsync("//page2");
+		//		await Task.Delay(100);
+		//	});
+		//}
 
 		protected Task<Shell> CreateShellAsync(Action<Shell> action) =>
 			InvokeOnMainThreadAsync(() =>

@@ -23,37 +23,37 @@ namespace Microsoft.Maui.DeviceTests
 	[Category(TestCategory.Behavior)]
 	public partial class PlatformBehaviorTests : HandlerTestBase
 	{
-		[Fact]
-		public async Task BasicLoadUnloadingWorks()
-		{
-			var behavior = new PlatformBehaviorTest();
-			var editor = new Editor();
-			editor.Behaviors.Add(behavior);
+		//[Fact]
+		//public async Task BasicLoadUnloadingWorks()
+		//{
+		//	var behavior = new PlatformBehaviorTest();
+		//	var editor = new Editor();
+		//	editor.Behaviors.Add(behavior);
 
-			IView layout = new VerticalStackLayout()
-			{
-				Children =
-				{
-					editor
-				}
-			};
+		//	IView layout = new VerticalStackLayout()
+		//	{
+		//		Children =
+		//		{
+		//			editor
+		//		}
+		//	};
 
-			Assert.False(behavior.IsAttached);
-			Assert.Equal(0, behavior.AttachedCount);
-			Assert.Equal(0, behavior.DetachedCount);
+		//	Assert.False(behavior.IsAttached);
+		//	Assert.Equal(0, behavior.AttachedCount);
+		//	Assert.Equal(0, behavior.DetachedCount);
 
-			await CreateHandlerAndAddToWindow<LayoutHandler>(layout, (_) =>
-			{
-				Assert.True(behavior.IsAttached);
-				Assert.Equal(1, behavior.AttachedCount);
-				Assert.Equal(0, behavior.DetachedCount);
-				return Task.CompletedTask;
-			});
+		//	await CreateHandlerAndAddToWindow<LayoutHandler>(layout, (_) =>
+		//	{
+		//		Assert.True(behavior.IsAttached);
+		//		Assert.Equal(1, behavior.AttachedCount);
+		//		Assert.Equal(0, behavior.DetachedCount);
+		//		return Task.CompletedTask;
+		//	});
 
-			Assert.False(behavior.IsAttached);
-			Assert.Equal(1, behavior.AttachedCount);
-			Assert.Equal(1, behavior.DetachedCount);
-		}
+		//	Assert.False(behavior.IsAttached);
+		//	Assert.Equal(1, behavior.AttachedCount);
+		//	Assert.Equal(1, behavior.DetachedCount);
+		//}
 
 
 		class PlatformBehaviorTest : PlatformBehavior<Editor>
