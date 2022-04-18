@@ -64,7 +64,7 @@ namespace Microsoft.Maui.DeviceTests
 			handler.SetVirtualView(element);
 			element.Handler = handler;
 
-			if (element is IView view)
+			if (element is IView view && !double.IsNaN(view.Width) && !double.IsNaN(view.Height))
 			{
 				view.Arrange(new Rect(0, 0, view.Width, view.Height));
 
