@@ -12,7 +12,7 @@ namespace Microsoft.AspNetCore.Components.WebView.Maui
 		/// <summary>
 		/// This field is part of MAUI infrastructure and is not intended for use by application code.
 		/// </summary>
-		public static PropertyMapper<IBlazorWebView, BlazorWebViewHandler> BlazorWebViewMapper = new(ViewMapper)
+		public static PropertyMapper<IBlazorWebView, BlazorWebViewHandler> Mapper = new(ViewMapper)
 		{
 			[nameof(IBlazorWebView.HostPage)] = MapHostPage,
 			[nameof(IBlazorWebView.RootComponents)] = MapRootComponents,
@@ -21,7 +21,7 @@ namespace Microsoft.AspNetCore.Components.WebView.Maui
 		/// <summary>
 		/// Initializes a new instance of <see cref="BlazorWebViewHandler"/> with default mappings.
 		/// </summary>
-		public BlazorWebViewHandler() : this(BlazorWebViewMapper)
+		public BlazorWebViewHandler() : this(Mapper)
 		{
 		}
 
@@ -29,7 +29,7 @@ namespace Microsoft.AspNetCore.Components.WebView.Maui
 		/// Initializes a new instance of <see cref="BlazorWebViewHandler"/> using the specified mappings.
 		/// </summary>
 		/// <param name="mapper">The property mappings.</param>
-		public BlazorWebViewHandler(PropertyMapper? mapper) : base(mapper ?? BlazorWebViewMapper)
+		public BlazorWebViewHandler(PropertyMapper? mapper) : base(mapper ?? Mapper)
 		{
 		}
 
