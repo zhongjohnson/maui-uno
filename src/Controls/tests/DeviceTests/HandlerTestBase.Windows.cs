@@ -16,6 +16,8 @@ using System;
 using Microsoft.Extensions.DependencyInjection;
 using System.Collections.Generic;
 using WPoint = Windows.Foundation.Point;
+using WAppBarButton = Microsoft.UI.Xaml.Controls.AppBarButton;
+using Xunit;
 
 namespace Microsoft.Maui.DeviceTests
 {
@@ -116,7 +118,7 @@ namespace Microsoft.Maui.DeviceTests
 			var handler = element.Handler;
 			var rootManager = handler.MauiContext.GetNavigationRootManager();
 			var position = element.GetLocationRelativeTo(rootManager.AppTitleBar);
-			var distance = rootManager.AppTitleBar.Height - position.Value.Y;
+			var distance = rootManager.AppTitleBar.ActualHeight - position.Value.Y;
 			return distance;
 		}
 
@@ -144,6 +146,31 @@ namespace Microsoft.Maui.DeviceTests
 			var navView = (RootNavigationView)GetMauiNavigationView(handler.MauiContext);
 			MauiToolbar windowHeader = (MauiToolbar)navView.Header;
 			return windowHeader;
+		}
+
+		public bool ToolbarItemsMatch(
+			IElementHandler handler,
+			params ToolbarItem[] toolbarItems)
+		{
+			var navView = (RootNavigationView)GetMauiNavigationView(handler.MauiContext);
+			MauiToolbar windowHeader = (MauiToolbar)navView.Header;
+			Assert.NotNull(windowHeader?.CommandBar?.PrimaryCommands);
+
+			Assert.Equal(toolbarItems.Length, windowHeader.CommandBar.PrimaryCommands.Count);
+			for (var i = 0; i < toolbarItems.Length; i++)
+			{
+				ToolbarItem toolbarItem = toolbarItems[i];
+				var primaryCommand = ((WAppBarButton)windowHeader.CommandBar.PrimaryCommands[i]);
+				Assert.Equal(toolbarItem, primaryCommand.DataContext);
+			}
+
+			return true;
+		}
+    
+		protected object GetTitleView(IElementHandler handler)
+		{
+			var toolbar = GetPlatformToolbar(handler);
+			return toolbar.TitleView;
 		}
 	}
 }
