@@ -18,5 +18,17 @@
 			// If there's no parent, try asking the App; failing that, fall back to LTR
 			return view.Handler?.MauiContext?.GetFlowDirection() ?? FlowDirection.LeftToRight;
 		}
+
+		public static bool GetIsEnabled(this IView view)
+		{
+			bool parentIsEnabled = true;
+
+			if (view.Parent is IView parentView)
+			{
+				parentIsEnabled = parentView.GetIsEnabled();
+			}
+
+			return parentIsEnabled && view.IsEnabled;
+		}
 	}
 }

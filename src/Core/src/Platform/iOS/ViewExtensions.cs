@@ -4,10 +4,7 @@ using System.Numerics;
 using System.Threading.Tasks;
 using CoreGraphics;
 using Foundation;
-using Microsoft.Maui.Devices;
 using Microsoft.Maui.Graphics;
-using Microsoft.Maui.Media;
-using ObjCRuntime;
 using UIKit;
 using static Microsoft.Maui.Primitives.Dimension;
 
@@ -19,10 +16,12 @@ namespace Microsoft.Maui.Platform
 
 		public static void UpdateIsEnabled(this UIView platformView, IView view)
 		{
-			if (platformView is not UIControl uiControl)
-				return;
+			if (platformView is UIControl uiControl)
+				uiControl.Enabled = view.GetIsEnabled();
+			else
+				platformView.UserInteractionEnabled = view.IsEnabled;
 
-			uiControl.Enabled = view.IsEnabled;
+			(view as ILayout)?.InvalidateChildrenIsEnabled();
 		}
 
 		public static void Focus(this UIView platformView, FocusRequest request)
