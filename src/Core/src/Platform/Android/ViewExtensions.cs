@@ -45,7 +45,7 @@ namespace Microsoft.Maui.Platform
 				layoutDirection: (int)GetLayoutDirection(view),
 				minimumHeight: (int)context.ToPixels(view.MinimumHeight),
 				minimumWidth: (int)context.ToPixels(view.MinimumWidth),
-				enabled: view.IsEnabled,
+				enabled: view.GetIsEnabled(),
 				alpha: (float)view.Opacity,
 				translationX: context.ToPixels(view.TranslationX),
 				translationY: context.ToPixels(view.TranslationY),
