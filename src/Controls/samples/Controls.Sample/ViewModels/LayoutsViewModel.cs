@@ -49,7 +49,10 @@ namespace Maui.Controls.Sample.ViewModels
 				"Demonstrations of layout clipping."),
 
 			new SectionModel(typeof(CustomLayoutPage), "Custom Layout",
-				"Demonstrations of custom layout."),
+				"Demonstrations of custom layout."),  
+			
+			new SectionModel(typeof(LayoutIsEnabledPage), "Layout IsEnabled",
+				"Demonstrations of enabling/disabling a layout."),
 		};
 	}
 }
