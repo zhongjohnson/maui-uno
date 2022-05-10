@@ -704,7 +704,7 @@ void InstallMsiOrExe(string msiFile, string installTo = null, string fileName = 
 
 Task("provision")
     .Description("Install SDKs required to build project")
-    .IsDependentOn("provision-macsdk")
+    //.IsDependentOn("provision-macsdk")
     .IsDependentOn("provision-iossdk")
     .IsDependentOn("provision-androidsdk")
     .IsDependentOn("provision-netsdk-local")
