@@ -18,8 +18,6 @@ namespace Microsoft.Maui.Platform
 		{
 			if (platformView is UIControl uiControl)
 				uiControl.Enabled = view.GetIsEnabled();
-			else
-				platformView.UserInteractionEnabled = view.IsEnabled;
 
 			(view as ILayout)?.InvalidateChildrenIsEnabled();
 		}
