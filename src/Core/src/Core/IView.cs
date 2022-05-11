@@ -47,7 +47,7 @@ namespace Microsoft.Maui
 		/// <summary>
 		/// Gets a value indicating whether this View is enabled in the user interface. 
 		/// </summary>
-		bool IsEnabled { get; set; }
+		bool IsEnabled { get; }
 
 		/// <summary>
 		/// Gets a value indicating whether this View is focused currently.
