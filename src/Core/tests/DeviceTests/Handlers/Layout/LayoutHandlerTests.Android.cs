@@ -97,7 +97,9 @@ namespace Microsoft.Maui.DeviceTests.Handlers.Layout
 		{
 			return InvokeOnMainThreadAsync(() =>
 			{
-				return layoutHandler.PlatformView.GetChildAt(0).Enabled;
+				var child = layoutHandler.PlatformView.GetChildAt(0);
+
+				return child.Enabled;
 			});
 		}
 	}

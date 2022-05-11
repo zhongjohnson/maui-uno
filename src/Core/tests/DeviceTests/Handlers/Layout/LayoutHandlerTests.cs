@@ -410,6 +410,8 @@ namespace Microsoft.Maui.DeviceTests.Handlers.Layout
 			childLayout.Parent = layout;
 
 			var layoutHandler = await CreateHandlerAsync(layout);
+			layout.Handler = layoutHandler;
+			layoutHandler.PlatformView.UpdateIsEnabled(layout);
 
 			var children = await InvokeOnMainThreadAsync(() =>
 			{
