@@ -4,8 +4,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using Android.Widget;
 using Microsoft.Maui.DeviceTests.Stubs;
-using Microsoft.Maui.Graphics;
-using Microsoft.Maui.Handlers;
 using Xunit;
 using AView = Android.Views.View;
 
@@ -93,6 +91,14 @@ namespace Microsoft.Maui.DeviceTests.Handlers.Layout
 			});
 
 			Assert.Equal(expected, actual);
+		}
+
+		Task<bool> GetNativeChildrenIsEnabled(LayoutHandler layoutHandler)
+		{
+			return InvokeOnMainThreadAsync(() =>
+			{
+				return layoutHandler.PlatformView.GetChildAt(0).Enabled;
+			});
 		}
 	}
 }

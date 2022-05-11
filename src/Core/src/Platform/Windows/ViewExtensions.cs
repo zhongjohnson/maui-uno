@@ -31,8 +31,8 @@ namespace Microsoft.Maui.Platform
 			if (platformView is Control control)
 				control.UpdateIsEnabled(view);
 			else
-				platformView.IsHitTestVisible = view.IsEnabled && !view.InputTransparent;
-
+				platformView.IsHitTestVisible = view.GetIsEnabled() && !view.InputTransparent;
+		
 			(view as ILayout)?.InvalidateChildrenIsEnabled();
 		}
 

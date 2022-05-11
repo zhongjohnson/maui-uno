@@ -3,9 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Maui.DeviceTests.Stubs;
-using Microsoft.Maui.Graphics;
-using Microsoft.Maui.Handlers;
-using ObjCRuntime;
 using UIKit;
 using Xunit;
 
@@ -86,6 +83,19 @@ namespace Microsoft.Maui.DeviceTests.Handlers.Layout
 			});
 
 			Assert.Equal(expected, actual);
+		}
+
+		Task<bool> GetNativeChildrenIsEnabled(LayoutHandler layoutHandler)
+		{
+			return InvokeOnMainThreadAsync(() =>
+			{
+				var child = layoutHandler.PlatformView.Subviews[0];
+
+				if (child is UIControl control)
+					return control.Enabled;
+
+				return child.UserInteractionEnabled;
+			});
 		}
 	}
 }

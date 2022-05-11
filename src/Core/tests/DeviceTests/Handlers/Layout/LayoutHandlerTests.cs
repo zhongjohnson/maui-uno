@@ -390,5 +390,38 @@ namespace Microsoft.Maui.DeviceTests.Handlers.Layout
 			Assert.Equal(layout.MinimumWidth, measure.Width, 0);
 			Assert.Equal(layout.MinimumHeight, measure.Height, 0);
 		}
+
+		[Theory(DisplayName = "Layout IsEnabled update the chidrens")]
+		[InlineData(true)]
+		[InlineData(false)]
+		public async Task LayoutIsEnabledPropagateToChildren(bool isEnabled)
+		{
+			var layout = new LayoutStub
+			{
+				IsEnabled = isEnabled
+			};
+
+			var childLayout = new LayoutStub();
+
+			var childLayoutHandler = await CreateHandlerAsync(childLayout);
+			childLayout.Handler = childLayoutHandler;
+
+			layout.Add(childLayout);
+			childLayout.Parent = layout;
+
+			var layoutHandler = await CreateHandlerAsync(layout);
+
+			var children = await InvokeOnMainThreadAsync(() =>
+			{
+				return GetNativeChildren(layoutHandler);
+			});
+
+			Assert.Equal(1, children.Count);
+			Assert.Same(childLayout.Handler.PlatformView, children[0]);
+
+			var actual = await GetNativeChildrenIsEnabled(layoutHandler);
+
+			Assert.Equal(isEnabled, actual);
+		}
 	}
 }

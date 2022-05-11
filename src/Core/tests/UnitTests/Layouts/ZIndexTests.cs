@@ -26,7 +26,7 @@ namespace Microsoft.Maui.UnitTests.Layouts
 			public Semantics Semantics { get; }
 			public IShape Clip { get; }
 			public IShadow Shadow { get; }
-			public bool IsEnabled { get; }
+			public bool IsEnabled { get; set; }
 			public bool IsFocused { get; set; }
 			public Visibility Visibility { get; }
 			public double Opacity { get; }

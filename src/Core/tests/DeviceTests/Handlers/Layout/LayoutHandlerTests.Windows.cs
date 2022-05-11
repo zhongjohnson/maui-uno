@@ -1,10 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.Maui.DeviceTests.Stubs;
-using Microsoft.Maui.Graphics;
-using Microsoft.Maui.Handlers;
 using Microsoft.UI.Xaml;
-using Microsoft.UI.Xaml.Automation.Peers;
-using Microsoft.UI.Xaml.Automation.Provider;
 using Microsoft.UI.Xaml.Controls;
 using Xunit;
 using System.Collections.Generic;
@@ -15,7 +11,7 @@ namespace Microsoft.Maui.DeviceTests.Handlers.Layout
 {
 	public partial class LayoutHandlerTests
 	{
-		string GetNativeText(UIElement view) 
+		string GetNativeText(UIElement view)
 		{
 			return (view as TextBlock).Text;
 		}
@@ -47,12 +43,14 @@ namespace Microsoft.Maui.DeviceTests.Handlers.Layout
 			// Lots of ways we could compare the two lists, but dumping them both to comma-separated strings
 			// makes it easy to give the test useful output
 
-			string expected = await InvokeOnMainThreadAsync(() => {
+			string expected = await InvokeOnMainThreadAsync(() =>
+			{
 				return children.OrderBy(platformView => GetNativeText(platformView))
 					.Aggregate("", (str, platformView) => str + (str.Length > 0 ? ", " : "") + GetNativeText(platformView));
 			});
 
-			string actual = await InvokeOnMainThreadAsync(() => {
+			string actual = await InvokeOnMainThreadAsync(() =>
+			{
 				return children.Aggregate("", (str, platformView) => str + (str.Length > 0 ? ", " : "") + GetNativeText(platformView));
 			});
 
@@ -77,6 +75,19 @@ namespace Microsoft.Maui.DeviceTests.Handlers.Layout
 				{
 					Assert.Equal(UI.Xaml.FlowDirection.LeftToRight, layoutPanel.FlowDirection);
 				}
+			});
+		}
+
+		Task<bool> GetNativeChildrenIsEnabled(LayoutHandler layoutHandler)
+		{
+			return InvokeOnMainThreadAsync(() =>
+			{
+				var child = layoutHandler.PlatformView.Children[0];
+
+				if (child is Control control)
+					return control.IsEnabled;
+
+				return child.IsHitTestVisible;
 			});
 		}
 	}
