@@ -31,11 +31,9 @@ namespace Microsoft.Maui.Platform
 			if (platformView is Control control)
 				control.UpdateIsEnabled(view);
 			else
-			{
 				platformView.IsHitTestVisible = view.IsEnabled && !view.InputTransparent;
 
-				(view as ILayout)?.InvalidateChildrenIsEnabled();
-			}
+			(view as ILayout)?.InvalidateChildrenIsEnabled();
 		}
 
 		public static void Focus(this FrameworkElement platformView, FocusRequest request)
