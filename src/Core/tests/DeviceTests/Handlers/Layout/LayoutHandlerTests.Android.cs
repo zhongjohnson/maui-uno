@@ -93,14 +93,7 @@ namespace Microsoft.Maui.DeviceTests.Handlers.Layout
 			Assert.Equal(expected, actual);
 		}
 
-		Task<bool> GetNativeChildrenIsEnabled(LayoutHandler layoutHandler)
-		{
-			return InvokeOnMainThreadAsync(() =>
-			{
-				var child = layoutHandler.PlatformView.GetChildAt(0);
-
-				return child.Enabled;
-			});
-		}
+		Task<bool> GetNativeChildrenIsEnabled(LayoutHandler layoutHandler) =>
+			InvokeOnMainThreadAsync(() => layoutHandler?.PlatformView?.GetChildAt(0)?.Enabled ?? false);
 	}
 }
