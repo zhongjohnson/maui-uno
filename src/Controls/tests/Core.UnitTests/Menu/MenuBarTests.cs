@@ -37,6 +37,79 @@ namespace Microsoft.Maui.Controls.Core.UnitTests.Menu
 			return handler;
 		}
 
+		[Test]
+		public void UsingWindowDoesNotReAssigleParents()
+		{
+			MenuFlyoutItem flyout;
+			MenuBarItem menuItem;
+
+			var page = new ContentPage
+			{
+				MenuBarItems =
+				{
+					(menuItem = new MenuBarItem
+					{
+						(flyout = new MenuFlyoutItem { })
+					})
+				}
+			};
+
+			Assert.AreEqual(menuItem, flyout.Parent);
+			Assert.AreEqual(page, menuItem.Parent);
+
+			var window = new Window(page);
+
+			Assert.AreEqual(menuItem, flyout.Parent);
+			Assert.AreEqual(page, menuItem.Parent);
+			Assert.AreEqual(window, page.Parent);
+
+			// just accessing the MenuBar used to reparent everything
+			var menubar = (window as IMenuBarElement).MenuBar;
+			Assert.IsNotNull(menubar);
+
+			Assert.AreEqual(menuItem, flyout.Parent);
+			Assert.AreEqual(page, menuItem.Parent);
+			Assert.AreEqual(window, page.Parent);
+		}
+
+		[Test]
+		public void UsingWindowDoesNotReAssigleBindingContext()
+		{
+			var bindingContext = new
+			{
+				Name = "Matthew"
+			};
+
+			MenuFlyoutItem flyout;
+			MenuBarItem menuItem;
+
+			var page = new ContentPage
+			{
+				BindingContext= bindingContext,
+				MenuBarItems =
+				{
+					(menuItem = new MenuBarItem
+					{
+						(flyout = new MenuFlyoutItem { })
+					})
+				}
+			};
+
+			flyout.SetBinding(MenuFlyoutItem.TextProperty, new Binding(nameof(bindingContext.Name)));
+
+			Assert.AreEqual(bindingContext.Name, flyout.Text);
+
+			var window = new Window(page);
+
+			Assert.AreEqual(bindingContext.Name, flyout.Text);
+
+			// just accessing the MenuBar used to reparent everything
+			var menubar = (window as IMenuBarElement).MenuBar;
+			Assert.IsNotNull(menubar);
+
+			Assert.AreEqual(bindingContext.Name, flyout.Text);
+		}
+
 		class NonThrowingMenuBarHandler : MenuBarHandler
 		{
 			public NonThrowingMenuBarHandler(IPropertyMapper mapper, CommandMapper commandMapper)
