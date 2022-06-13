@@ -132,6 +132,11 @@ namespace Microsoft.Maui
 			Services?.InvokeLifecycleEvents<iOSLifecycle.WillEnterForeground>(del => del(application));
 		}
 
+		[Export("application:performFetchWithCompletionHandler:")]
+		public virtual void PerformFetch(UIApplication application, Action<UIBackgroundFetchResult> completionHandler)
+		{
+		}
+
 		public static MauiUIApplicationDelegate Current { get; private set; } = null!;
 
 		[Export("window")]
