@@ -153,7 +153,9 @@ namespace Microsoft.Maui.Controls.Maps
 			if (mapSpan == null)
 				throw new ArgumentNullException(nameof(mapSpan));
 			LastMoveToRegion = mapSpan;
+#pragma warning disable CS0618 // Type or member is obsolete
 			MessagingCenter.Send(this, "MapMoveToRegion", mapSpan);
+#pragma warning restore CS0618 // Type or member is obsolete
 		}
 
 		void PinsOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)

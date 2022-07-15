@@ -65,7 +65,9 @@ namespace Microsoft.Maui.Controls.Compatibility.Maps.MacOS
 				if (Element != null)
 				{
 					var mapModel = (Map)Element;
+#pragma warning disable CS0618 // Type or member is obsolete
 					MessagingCenter.Unsubscribe<Map, MapSpan>(this, MoveMessageName);
+#pragma warning restore CS0618 // Type or member is obsolete
 					((ObservableCollection<Pin>)mapModel.Pins).CollectionChanged -= OnPinCollectionChanged;
 					((ObservableCollection<MapElement>)mapModel.MapElements).CollectionChanged -= OnMapElementCollectionChanged;
 					foreach (Pin pin in mapModel.Pins)
@@ -116,7 +118,9 @@ namespace Microsoft.Maui.Controls.Compatibility.Maps.MacOS
 			{
 				var mapModel = (Map)e.OldElement;
 
+#pragma warning disable CS0618 // Type or member is obsolete
 				MessagingCenter.Unsubscribe<Map, MapSpan>(this, MoveMessageName);
+#pragma warning restore CS0618 // Type or member is obsolete
 
 				((ObservableCollection<Pin>)mapModel.Pins).CollectionChanged -= OnPinCollectionChanged;
 				foreach (Pin pin in mapModel.Pins)
@@ -160,7 +164,9 @@ namespace Microsoft.Maui.Controls.Compatibility.Maps.MacOS
 #endif
 				}
 
+#pragma warning disable CS0618 // Type or member is obsolete
 				MessagingCenter.Subscribe<Map, MapSpan>(this, MoveMessageName, (s, a) => MoveToRegion(a), mapModel);
+#pragma warning restore CS0618 // Type or member is obsolete
 				if (mapModel.LastMoveToRegion != null)
 					MoveToRegion(mapModel.LastMoveToRegion, false);
 

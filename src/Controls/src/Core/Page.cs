@@ -195,11 +195,12 @@ namespace Microsoft.Maui.Controls
 			var args = new ActionSheetArguments(title, cancel, destruction, buttons);
 
 			args.FlowDirection = flowDirection;
-
+#pragma warning disable CS0618 // TODO: Remove when we internalize/replace MessagingCenter
 			if (IsPlatformEnabled)
 				MessagingCenter.Send(this, ActionSheetSignalName, args);
 			else
 				_pendingActions.Add(() => MessagingCenter.Send(this, ActionSheetSignalName, args));
+#pragma warning restore CS0618 // Type or member is obsolete
 
 			return args.Result.Task;
 		}
@@ -235,10 +236,12 @@ namespace Microsoft.Maui.Controls
 			var args = new AlertArguments(title, message, accept, cancel);
 			args.FlowDirection = flowDirection;
 
+#pragma warning disable CS0618 // TODO: Remove when we internalize/replace MessagingCenter
 			if (IsPlatformEnabled)
 				MessagingCenter.Send(this, AlertSignalName, args);
 			else
 				_pendingActions.Add(() => MessagingCenter.Send(this, AlertSignalName, args));
+#pragma warning restore CS0618 // Type or member is obsolete
 
 			return args.Result.Task;
 		}
@@ -248,10 +251,12 @@ namespace Microsoft.Maui.Controls
 		{
 			var args = new PromptArguments(title, message, accept, cancel, placeholder, maxLength, keyboard, initialValue);
 
+#pragma warning disable CS0618 // TODO: Remove when we internalize/replace MessagingCenter
 			if (IsPlatformEnabled)
 				MessagingCenter.Send(this, PromptSignalName, args);
 			else
 				_pendingActions.Add(() => MessagingCenter.Send(this, PromptSignalName, args));
+#pragma warning restore CS0618 // Type or member is obsolete
 
 			return args.Result.Task;
 		}
@@ -476,11 +481,13 @@ namespace Microsoft.Maui.Controls
 
 			if (IsBusy)
 			{
+#pragma warning disable CS0618 // TODO: Remove when we internalize/replace MessagingCenter
 				if (IsPlatformEnabled)
 					MessagingCenter.Send(this, BusySetSignalName, true);
 				else
 					_pendingActions.Add(() => MessagingCenter.Send(this, BusySetSignalName, true));
 			}
+#pragma warning restore CS0618 // Type or member is obsolete
 
 			OnAppearing();
 			Appearing?.Invoke(this, EventArgs.Empty);
@@ -500,8 +507,10 @@ namespace Microsoft.Maui.Controls
 
 			_hasAppeared = false;
 
+#pragma warning disable CS0618 // TODO: Remove when we internalize/replace MessagingCenter
 			if (IsBusy)
 				MessagingCenter.Send(this, BusySetSignalName, false);
+#pragma warning restore CS0618 // Type or member is obsolete
 
 			var pageContainer = this as IPageContainer<Page>;
 			pageContainer?.CurrentPage?.SendDisappearing();
@@ -557,8 +566,9 @@ namespace Microsoft.Maui.Controls
 		{
 			if (!_hasAppeared)
 				return;
-
+#pragma warning disable CS0618 // TODO: Remove when we internalize/replace MessagingCenter
 			MessagingCenter.Send(this, BusySetSignalName, IsBusy);
+#pragma warning restore CS0618 // Type or member is obsolete
 		}
 
 		void OnToolbarItemsCollectionChanged(object sender, NotifyCollectionChangedEventArgs args)

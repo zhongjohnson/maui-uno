@@ -61,10 +61,12 @@ namespace Microsoft.Maui.Controls.Platform
 			Window = window;
 			MauiContext = mauiContext;
 
+#pragma warning disable CS0618 // TODO: Remove when we internalize/replace MessagingCenter
 			MessagingCenter.Subscribe<Page, bool>(Window, Page.BusySetSignalName, OnBusySetRequest);
 			MessagingCenter.Subscribe<Page, AlertArguments>(Window, Page.AlertSignalName, OnAlertRequest);
 			MessagingCenter.Subscribe<Page, ActionSheetArguments>(Window, Page.ActionSheetSignalName, OnActionSheetRequest);
 			MessagingCenter.Subscribe<Page, PromptArguments>(Window, Page.PromptSignalName, OnPromptRequested);
+#pragma warning restore CS0618 // Type or member is obsolete
 		}
 
 		public EWindow Window { get; }
@@ -72,10 +74,12 @@ namespace Microsoft.Maui.Controls.Platform
 
 		public void Dispose()
 		{
+#pragma warning disable CS0618 // TODO: Remove when we internalize/replace MessagingCenter
 			MessagingCenter.Unsubscribe<Page, AlertArguments>(Window, Page.AlertSignalName);
 			MessagingCenter.Unsubscribe<Page, bool>(Window, Page.BusySetSignalName);
 			MessagingCenter.Unsubscribe<Page, ActionSheetArguments>(Window, Page.ActionSheetSignalName);
 			MessagingCenter.Unsubscribe<Page, PromptArguments>(Window, Page.PromptSignalName);
+#pragma warning restore CS0618 // Type or member is obsolete
 		}
 
 		void OnBusySetRequest(Page sender, bool enabled)
