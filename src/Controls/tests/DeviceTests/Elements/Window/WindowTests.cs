@@ -65,15 +65,15 @@ namespace Microsoft.Maui.DeviceTests
 				var contentPage = new ContentPage()
 				{
 					ToolbarItems =
-				{
-					toolbarItem
-				}
+					{
+						toolbarItem
+					}
 				};
 
 				var shell = new Shell() { CurrentItem = contentPage };
 				window.Page = shell;
 
-				
+
 				await OnLoadedAsync(shell);
 				await OnLoadedAsync(shell.CurrentPage);
 

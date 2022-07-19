@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Numerics;
 using System.Threading.Tasks;
@@ -24,7 +24,7 @@ namespace Microsoft.Maui.Platform
 
 		public static void Focus(this UIView platformView, FocusRequest request)
 		{
-			platformView.BecomeFirstResponder();
+			request.IsFocused = platformView.BecomeFirstResponder();
 		}
 
 		public static void Unfocus(this UIView platformView, IView view)
@@ -73,7 +73,13 @@ namespace Microsoft.Maui.Platform
 			platformView.RemoveBackgroundLayer();
 
 			if (paint.IsNullOrEmpty())
-				return;
+			{
+				if (platformView is LayoutView)
+					platformView.BackgroundColor = null;
+				else
+					return;
+			}
+
 
 			if (paint is SolidPaint solidPaint)
 			{
@@ -379,6 +385,17 @@ namespace Microsoft.Maui.Platform
 		internal static Matrix4x4 GetViewTransform(this UIView view)
 			=> view.Layer.GetViewTransform();
 
+		internal static Point GetLocationOnScreen(this UIView view) =>
+			view.GetPlatformViewBounds().Location;
+
+		internal static Point? GetLocationOnScreen(this IElement element)
+		{
+			if (element.Handler?.MauiContext == null)
+				return null;
+
+			return (element.ToPlatform())?.GetLocationOnScreen();
+		}
+
 		internal static Graphics.Rect GetBoundingBox(this IView view)
 			=> view.ToPlatform().GetBoundingBox();
 
@@ -397,16 +414,6 @@ namespace Microsoft.Maui.Platform
 		internal static UIView? GetParent(this UIView? view)
 		{
 			return view?.Superview;
-		}
-
-		internal static void LayoutToSize(this IView view, double width, double height)
-		{
-			var platformFrame = new CGRect(0, 0, width, height);
-
-			if (view.Handler is IPlatformViewHandler viewHandler && viewHandler.PlatformView != null)
-				viewHandler.PlatformView.Frame = platformFrame;
-
-			view.Arrange(platformFrame.ToRectangle());
 		}
 
 		internal static Size LayoutToMeasuredSize(this IView view, double width, double height)

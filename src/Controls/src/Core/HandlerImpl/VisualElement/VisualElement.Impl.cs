@@ -204,7 +204,7 @@ namespace Microsoft.Maui.Controls
 				{
 					return Primitives.Dimension.Unset;
 				}
-				
+
 				ValidatePositive(value, nameof(IView.Width));
 				return value;
 			}
@@ -226,7 +226,7 @@ namespace Microsoft.Maui.Controls
 				{
 					return Primitives.Dimension.Unset;
 				}
-				
+
 				ValidatePositive(value, nameof(IView.Height));
 				return value;
 			}
@@ -322,6 +322,12 @@ namespace Microsoft.Maui.Controls
 		void OnShadowChanged(object? sender, PropertyChangedEventArgs e)
 		{
 			OnPropertyChanged(nameof(Shadow));
+		}
+
+		void PropagateBindingContextToBrush()
+		{
+			if (Background != null)
+				SetInheritedBindingContext(Background, BindingContext);
 		}
 
 		void PropagateBindingContextToShadow()

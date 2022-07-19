@@ -1,5 +1,4 @@
-﻿#if !IOS
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -102,7 +101,7 @@ namespace Microsoft.Maui.DeviceTests
 				}
 			});
 		}
-		
+
 		[Fact(DisplayName = "Clicking BackButton Fires Correct Navigation Events")]
 		public async Task ShellWithFlyoutDisabledDoesntRenderFlyout()
 		{
@@ -207,4 +206,3 @@ namespace Microsoft.Maui.DeviceTests
 		}
 	}
 }
-#endif

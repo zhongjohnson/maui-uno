@@ -195,6 +195,10 @@ namespace Microsoft.Maui.Platform
 						platformView.Background = drawable;
 				}
 			}
+			else if (platformView is LayoutViewGroup)
+			{
+				platformView.Background = null;
+			}
 		}
 
 		public static void UpdateOpacity(this AView platformView, IView view)
@@ -328,7 +332,7 @@ namespace Microsoft.Maui.Platform
 		internal static Rect GetPlatformViewBounds(this IView view)
 		{
 			var platformView = view?.ToPlatform();
-			
+
 			if (platformView?.Context == null)
 			{
 				return new Rect();
@@ -406,12 +410,18 @@ namespace Microsoft.Maui.Platform
 
 		internal static Graphics.Rect GetBoundingBox(this View? platformView)
 		{
-			if (platformView == null)
+			if (platformView?.Context == null)
 				return new Rect();
 
+			var context = platformView.Context;
 			var rect = new Android.Graphics.Rect();
 			platformView.GetGlobalVisibleRect(rect);
-			return new Rect(rect.ExactCenterX() - (rect.Width() / 2), rect.ExactCenterY() - (rect.Height() / 2), (float)rect.Width(), (float)rect.Height());
+
+			return new Rect(
+				context.FromPixels(rect.ExactCenterX() - (rect.Width() / 2)),
+				context.FromPixels(rect.ExactCenterY() - (rect.Height() / 2)),
+				context.FromPixels((float)rect.Width()),
+				context.FromPixels((float)rect.Height()));
 		}
 
 		internal static bool IsLoaded(this View frameworkElement) =>
@@ -555,6 +565,25 @@ namespace Microsoft.Maui.Platform
 			}
 
 			return null;
+		}
+
+		internal static Rect GetFrameRelativeTo(this View view, View relativeTo)
+		{
+			var viewWindowLocation = view.GetLocationOnScreen();
+			var relativeToLocation = relativeTo.GetLocationOnScreen();
+
+			return
+				new Rect(
+						new Point(viewWindowLocation.X - relativeToLocation.X, viewWindowLocation.Y - relativeToLocation.Y),
+						new Graphics.Size(view.Context.FromPixels(view.MeasuredWidth), view.Context.FromPixels(view.MeasuredHeight))
+					);
+		}
+
+		internal static Rect GetFrameRelativeToWindow(this View view)
+		{
+			return
+				new Rect(view.GetLocationOnScreen(),
+				new(view.Context.FromPixels(view.MeasuredHeight), view.Context.FromPixels(view.MeasuredWidth)));
 		}
 
 		internal static Point GetLocationOnScreen(this View view)
