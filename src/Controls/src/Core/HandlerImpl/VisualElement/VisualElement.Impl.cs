@@ -191,12 +191,14 @@ namespace Microsoft.Maui.Controls
 		internal Semantics SetupSemantics() =>
 			_semantics ??= new Semantics();
 
-		static void ValidatePositive(double value, string name)
+		static double EnsurePositive(double value)
 		{
 			if (value < 0)
 			{
-				throw new InvalidOperationException($"{name} cannot be less than zero.");
+				return 0;
 			}
+
+			return value;
 		}
 
 		double IView.Width
@@ -216,7 +218,7 @@ namespace Microsoft.Maui.Controls
 					return Primitives.Dimension.Unset;
 				}
 
-				ValidatePositive(value, nameof(IView.Width));
+				value = EnsurePositive(value);
 				return value;
 			}
 		}
@@ -238,7 +240,7 @@ namespace Microsoft.Maui.Controls
 					return Primitives.Dimension.Unset;
 				}
 
-				ValidatePositive(value, nameof(IView.Height));
+				value = EnsurePositive(value);
 				return value;
 			}
 		}
@@ -254,7 +256,7 @@ namespace Microsoft.Maui.Controls
 
 				// Access once up front to avoid multiple GetValue calls
 				var value = MinimumWidthRequest;
-				ValidatePositive(value, nameof(IView.MinimumWidth));
+				value = EnsurePositive(value);
 				return value;
 			}
 		}
@@ -270,7 +272,7 @@ namespace Microsoft.Maui.Controls
 
 				// Access once up front to avoid multiple GetValue calls
 				var value = MinimumHeightRequest;
-				ValidatePositive(value, nameof(IView.MinimumHeight));
+				value = EnsurePositive(value);
 				return value;
 			}
 		}
@@ -281,7 +283,7 @@ namespace Microsoft.Maui.Controls
 			{
 				// Access once up front to avoid multiple GetValue calls
 				var value = MaximumWidthRequest;
-				ValidatePositive(value, nameof(IView.MaximumWidth));
+				value = EnsurePositive(value);
 				return value;
 			}
 		}
@@ -292,7 +294,7 @@ namespace Microsoft.Maui.Controls
 			{
 				// Access once up front to avoid multiple GetValue calls
 				var value = MaximumHeightRequest;
-				ValidatePositive(value, nameof(IView.MaximumHeight));
+				value = EnsurePositive(value);
 				return value;
 			}
 		}

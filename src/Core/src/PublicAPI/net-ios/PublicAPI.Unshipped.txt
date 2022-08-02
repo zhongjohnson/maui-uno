@@ -28,3 +28,4 @@ static Microsoft.Maui.Platform.ViewExtensions.UpdateBackground(this UIKit.UIView
 override Microsoft.Maui.Platform.MauiTextField.SelectedTextRange.get -> UIKit.UITextRange?
 override Microsoft.Maui.Platform.MauiTextField.SelectedTextRange.set -> void
 static Microsoft.Maui.Platform.ViewExtensions.UpdateTooltipText(this UIKit.UIView! platformView, string? text) -> void
+*REMOVED* override Microsoft.Maui.Handlers.PickerSource.Dispose(bool disposing) -> void
